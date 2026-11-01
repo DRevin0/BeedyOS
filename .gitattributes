@@ -1,0 +1,4 @@
+# I am a cookie lover 
+* text=auto eol=lf
+*.sh text eol=lf
+*.png binary
