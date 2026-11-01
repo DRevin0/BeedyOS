@@ -1,0 +1,11 @@
+networkmanager
+wpa_supplicant
+wireless-regdb
+iw
+bluez
+bluez-utils
+bluetui
+wireguard-tools
+networkmanager-openvpn
+firewalld
+

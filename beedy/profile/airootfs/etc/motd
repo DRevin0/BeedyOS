@@ -1,0 +1,7 @@
+For Wi-Fi, authenticate to the wireless network using the [35miwctl[0m utility.
+For mobile broadband (WWAN) modems, connect with the [35mmmcli[0m utility.
+Ethernet, WLAN and WWAN interfaces using DHCP should work automatically.
+
+BeedyOS — live- iso.
+Installation:  archinstall --config /etc/beedy/archinstall.json
+After:  beedy-postinstall
