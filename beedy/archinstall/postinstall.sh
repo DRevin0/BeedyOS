@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 mkdir -p /usr/share/beedy
 cp /etc/os-release /usr/share/beedy/os-release
 printf 'BeedyOS \\r (\\l)\n\n' > /etc/issue

@@ -1,8 +1,8 @@
 # Why are you here? :D
-/work/
-/out/
-/build/
-/iso/
+beedy/work/
+beedy/out/
+beedy/build/
+beedy/iso/
 *.iso
 *.iso.sig
 *.sha256
