@@ -1,5 +1,4 @@
-
-name: CI Checks
+name: CI
 
 on:
   push:
@@ -33,3 +32,139 @@ jobs:
             --results=verified,unknown,unverified \
             --fail \
             --fail-on-scan-errors
+
+  lint:
+    name: Lint and validate
+    runs-on: ubuntu-latest
+    container: archlinux:latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install tools
+        run: pacman -Syu --noconfirm shellcheck jq
+
+      - name: Bash syntax
+        run: |
+          scripts=(
+            beedy/scripts/build.sh
+            beedy/archinstall/postinstall.sh
+            beedy/profile/profiledef.sh
+            beedy/profile/airootfs/root/.automated_script.sh
+            beedy/profile/airootfs/usr/local/bin/beedyinstall
+            beedy/profile/airootfs/usr/local/bin/choose-mirror
+            beedy/profile/airootfs/usr/local/bin/Installation_guide
+            beedy/profile/airootfs/usr/local/bin/livecd-sound
+          )
+          for f in "${scripts[@]}"; do
+            bash -n "$f"
+          done
+
+      - name: ShellCheck
+        run: |
+          shellcheck --severity=error -x \
+            beedy/scripts/build.sh \
+            beedy/archinstall/postinstall.sh \
+            beedy/profile/profiledef.sh \
+            beedy/profile/airootfs/root/.automated_script.sh \
+            beedy/profile/airootfs/usr/local/bin/beedyinstall
+
+      - name: JSON
+        run: jq empty beedy/archinstall/base.json
+
+      - name: Package list sanity
+        run: |
+          for f in beedy/packages/*/packages.x86_64; do
+            dups=$(sed -e 's/#.*//' -e '/^[[:space:]]*$/d' "$f" | sort | uniq -d)
+            if [ -n "$dups" ]; then
+              echo "Duplicate packages in $f:"
+              echo "$dups"
+              exit 1
+            fi
+          done
+
+      - name: Package availability
+        run: |
+          pacman -Sy --noconfirm
+          mapfile -t pkgs < <(
+            sed -e 's/#.*//' -e '/^[[:space:]]*$/d' \
+              beedy/packages/*/packages.x86_64 | sort -u
+          )
+          missing=0
+          for p in "${pkgs[@]}"; do
+            if ! pacman -Si "$p" >/dev/null 2>&1; then
+              echo "missing: $p"
+              missing=1
+            fi
+          done
+          exit "$missing"
+
+  build:
+    name: Build ISO
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.ref == 'refs/heads/main' ||
+      startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    container:
+      image: archlinux:latest
+      options: --privileged
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: pacman -Syu --noconfirm archiso jq git
+
+      - name: Build ISO
+        run: ./beedy/scripts/build.sh
+
+      - name: Split ISO if over 2 GiB
+        run: |
+          cd beedy/out
+          iso=$(ls ./*.iso)
+          iso=${iso#./}
+          size=$(stat -c %s "$iso")
+          if [ "$size" -ge $((2 * 1024 * 1024 * 1024)) ]; then
+            split -b 1900M -d -a 2 "$iso" "${iso}.part"
+            rm -f "$iso"
+          fi
+
+      - name: Upload ISO
+        uses: actions/upload-artifact@v4
+        with:
+          name: beedy-iso
+          path: beedy/out/*
+          retention-days: 14
+
+  release:
+    name: Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [secret-scan, lint, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download ISO
+        uses: actions/download-artifact@v4
+        with:
+          name: beedy-iso
+          path: dist
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          body: |
+            ## BeedyOS
+
+
+            ```bash
+            name=$(awk '{print $2}' SHA256SUMS)
+            cat ./*.iso.part* > "$name"
+            sha256sum -c SHA256SUMS
+            ```
