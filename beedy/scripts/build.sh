@@ -2,8 +2,8 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-[[ $EUID -eq 0 ]] || { echo "Запусти через sudo"; exit 1; }
-for c in mkarchiso jq base64; do command -v "$c" >/dev/null || { echo "Нужен $c"; exit 1; }; done
+[[ $EUID -eq 0 ]] || { echo "Need sudo"; exit 1; }
+for c in mkarchiso jq base64; do command -v "$c" >/dev/null || { echo "Need $c"; exit 1; }; done
 
 list() {
   local f
@@ -21,6 +21,7 @@ post=$(mktemp)
   echo 'rm -f /etc/os-release'
   echo "cat > /etc/os-release <<'EOF_OSREL'"
   cat profile/airootfs/etc/os-release
+  echo
   echo 'EOF_OSREL'
   cat archinstall/postinstall.sh
 } > "$post"

@@ -10,6 +10,7 @@
 *.img
 *.qcow2
 *.tar.zst
+*.jsonc
 
 etc/sudoers.d/
 etc/polkit-1/rules.d/
