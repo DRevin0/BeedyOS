@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# launches archinstall with config
+if ! ping -c1 -W3 archlinux.org >/dev/null 2>&1; then
+  echo "Нет сети. Для Wi-Fi: iwctl, затем: station wlan0 connect ИМЯ_СЕТИ"
+  exit 1
+fi
+exec archinstall --config /etc/beedy/archinstall.json "$@"
