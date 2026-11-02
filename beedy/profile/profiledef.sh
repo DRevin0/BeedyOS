@@ -3,8 +3,8 @@
 
 iso_name="beedy"
 iso_label="BEEDY_$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y%m)"
-iso_publisher="Beedy <https://archlinux.org>"
-iso_application="Beedy Linux Live/Rescue DVD"
+iso_publisher="Beedy <https://github.com/DRevin0/BeedyOS>"
+iso_application="Beedy Live/Rescue DVD"
 iso_version="$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y.%m.%d)"
 install_dir="beedy"
 bootmodes=('bios.syslinux'
