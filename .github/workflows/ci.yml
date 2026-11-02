@@ -93,7 +93,7 @@ jobs:
           )
           missing=0
           for p in "${pkgs[@]}"; do
-            if ! pacman -Si "$p" >/dev/null 2>&1; then
+            if ! pacman -Sp --print-format '%n' "$p" >/dev/null 2>&1; then
               echo "missing: $p"
               missing=1
             fi
