@@ -26,5 +26,3 @@ fi
 
 # ironbar
 systemctl --global enable ironbar.service
-
-true
