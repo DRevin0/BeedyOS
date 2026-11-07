@@ -1,0 +1,3 @@
+# BEEDY TUI profile entry point.
+# The complete layout/theme lives in beedy-tui.toml beside this file.
+imports = ["beedy-tui.toml"]
