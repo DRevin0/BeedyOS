@@ -1,0 +1,143 @@
+// BEEDY TUI Compact v5 — Gruvbox Dark, matched to the packaged layout.
+
+$bg0: #282828;
+$bg1: #3c3836;
+$bg2: #504945;
+$bg3: #665c54;
+$fg: #ebdbb2;
+$muted: #a89984;
+$yellow: #fabd2f;
+$green: #b8bb26;
+$red: #fb4934;
+$blue: #83a598;
+
+* {
+  font-family: monospace;
+}
+
+menubutton.bar-button {
+  --bar-btn-bg: transparent;
+  --bar-btn-label-color: #ebdbb2;
+  --bar-btn-label-weight: 500;
+  --bar-btn-icon-size: 0.95;
+  --bar-btn-label-size: 0.9;
+}
+
+menubutton.bar-button:hover {
+  --bar-btn-bg: #504945;
+  --bar-btn-label-color: #ebdbb2;
+}
+
+menubutton.bar-button:active {
+  --bar-btn-bg: #665c54;
+}
+
+// Dashboard: the original full-colour 128x128 Beedy pug PNG.
+menubutton.bar-button.beedy-mark {
+  --bar-btn-bg: #fabd2f;
+  --bar-btn-label-color: #282828;
+  --bar-btn-label-weight: 700;
+  border: 1px solid #fabd2f;
+  border-radius: 0;
+  padding: 0 6px;
+}
+
+menubutton.bar-button.beedy-mark:hover {
+  --bar-btn-bg: #ebdbb2;
+  background-color: #ebdbb2;
+  border-color: #ebdbb2;
+}
+
+menubutton.bar-button.beedy-clock {
+  --bar-btn-bg: transparent;
+  --bar-btn-label-color: #fabd2f;
+  --bar-btn-label-weight: 700;
+}
+
+menubutton.bar-button.beedy-workspaces-module {
+  --bar-btn-bg: transparent;
+  --bar-btn-label-color: #ebdbb2;
+  --bar-btn-label-weight: 600;
+}
+
+menubutton.bar-button.beedy-network,
+menubutton.bar-button.beedy-bluetooth,
+menubutton.bar-button.beedy-volume,
+menubutton.bar-button.beedy-notifications,
+menubutton.bar-button.beedy-power {
+  --bar-btn-bg: transparent;
+}
+
+menubutton.bar-button.beedy-power {
+  --bar-btn-label-color: #fb4934;
+  --bar-btn-label-weight: 700;
+}
+
+#beedy-workspaces,
+#beedy-system {
+  border: 1px solid #504945;
+  border-radius: 0;
+  background-color: #3c3836;
+  padding: 0 3px;
+}
+
+#beedy-workspaces {
+  border-color: #665c54;
+}
+
+#beedy-system {
+  border-color: #504945;
+}
+
+// Gruvbox dropdown surfaces.
+popover.dropdown {
+  color: $fg;
+  background-color: $bg1;
+  border: 1px solid $yellow;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+popover.dropdown > contents {
+  color: $fg;
+  background-color: $bg1;
+  border: 0;
+  border-radius: 0;
+  padding: 10px;
+}
+
+popover.dropdown label {
+  color: $fg;
+}
+
+popover.dropdown button {
+  color: $fg;
+  background-color: $bg2;
+  border: 1px solid $bg3;
+  border-radius: 0;
+  box-shadow: none;
+  min-height: 28px;
+  padding: 4px 8px;
+}
+
+popover.dropdown button:hover,
+popover.dropdown button:active,
+popover.dropdown button:checked {
+  color: $bg0;
+  background-color: $yellow;
+  border-color: $yellow;
+}
+
+tooltip,
+tooltip > contents {
+  color: $fg;
+  background-color: $bg1;
+  border: 1px solid $bg3;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+*:focus {
+  outline: 1px solid $yellow;
+  outline-offset: 1px;
+}
