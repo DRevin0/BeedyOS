@@ -1,3 +1,177 @@
-# BEEDY TUI profile entry point.
-# The complete layout/theme lives in beedy-tui.toml beside this file.
-imports = ["beedy-tui.toml"]
+# BEEDY TUI Compact v5 — Wayle + Niri
+# Installed from the shareable BEEDY TUI package.
+
+# BEEDY TUI — focused Wayle preset for Niri
+# This file is imported by ~/.config/wayle/config.toml.
+# Every option below is part of the current Wayle configuration reference.
+
+[general]
+font-sans = "monospace"
+font-mono = "monospace"
+tearing-mode = false
+
+[styling]
+theme-provider = "wayle"
+scale = 1.0
+rounding = "none"
+
+[styling.palette]
+bg = "#282828"
+surface = "#3c3836"
+elevated = "#504945"
+fg = "#ebdbb2"
+fg-muted = "#a89984"
+primary = "#fabd2f"
+red = "#fb4934"
+yellow = "#fabd2f"
+green = "#b8bb26"
+blue = "#83a598"
+
+[bar]
+location = "top"
+layer = "top"
+exclusive = true
+scale = 0.9
+inset-edge = 0.0
+inset-ends = 0.35
+padding = 0.30
+padding-ends = 0.35
+module-gap = 0.35
+bg = "#282828"
+background-opacity = 100
+border-location = "bottom"
+border-width = 1
+border-color = "#504945"
+rounding = "none"
+shadow = "none"
+button-variant = "basic"
+button-opacity = 100
+button-bg-opacity = 100
+button-icon-size = 0.95
+button-label-size = 0.9
+button-label-weight = "medium"
+button-label-padding = 0.45
+button-gap = 0.45
+button-rounding = "none"
+button-border-location = "none"
+button-group-background = "#3c3836"
+button-group-border-color = "#504945"
+button-group-border-location = "all"
+button-group-border-width = 1
+button-group-rounding = "none"
+button-group-padding = 0.25
+button-group-module-gap = 0.15
+button-group-opacity = 100
+dropdown-shadow = false
+dropdown-opacity = 100
+dropdown-autohide = true
+dropdown-freeze-label = true
+
+[[bar.layout]]
+monitor = "*"
+left = [
+  { module = "dashboard", class = "beedy-mark" },
+  { name = "beedy-workspaces", modules = [
+    { module = "niri-workspaces", class = "beedy-workspaces-module" },
+  ] },
+]
+center = [
+  { module = "clock", class = "beedy-clock" },
+]
+right = [
+  { name = "beedy-system", modules = [
+    { module = "network", class = "beedy-network" },
+    { module = "bluetooth", class = "beedy-bluetooth" },
+    { module = "volume", class = "beedy-volume" },
+    { module = "notifications", class = "beedy-notifications" },
+  ] },
+  { module = "power", class = "beedy-power" },
+]
+
+[modules.dashboard]
+icon-override = "cm-beedy-mascot"
+border-show = false
+icon-color = "#282828"
+icon-bg-color = "#fabd2f"
+
+[modules.niri-workspaces]
+min-workspace-count = 5
+monitor-specific = true
+hide-trailing-empty = false
+display-mode = "label"
+label-strategy = "index"
+urgent-show = false
+active-indicator = "underline"
+app-icons-show = false
+workspace-padding = 0.40
+label-size = 0.9
+active-color = "#fabd2f"
+occupied-color = "#ebdbb2"
+empty-color = "#7c6f64"
+container-bg-color = "transparent"
+border-show = false
+
+[modules.clock]
+format = "%H:%M"
+icon-show = false
+label-show = true
+label-color = "#ebdbb2"
+label-max-length = 5
+border-show = false
+button-bg-color = "transparent"
+
+[modules.network]
+icon-show = true
+label-show = false
+border-show = false
+icon-color = "#83a598"
+button-bg-color = "transparent"
+
+[modules.bluetooth]
+icon-show = true
+label-show = false
+border-show = false
+icon-color = "#83a598"
+button-bg-color = "transparent"
+
+[modules.volume]
+icon-show = true
+label-show = false
+border-show = false
+icon-color = "#fabd2f"
+button-bg-color = "transparent"
+
+[modules.notifications]
+icon-show = true
+label-show = false
+border-show = false
+icon-color = "#a89984"
+button-bg-color = "transparent"
+popup-position = "bottom-right"
+popup-max-visible = 2
+popup-stacking-order = "newest-first"
+popup-duration = 4500
+popup-hover-pause = true
+popup-margin-x = 18
+popup-margin-y = 18
+popup-gap = 10
+popup-monitor = "primary"
+popup-layer = "overlay"
+popup-close-behavior = "dismiss"
+popup-shadow = false
+popup-urgency-bar = "critical"
+
+[modules.power]
+border-show = false
+icon-color = "#fb4934"
+icon-bg-color = "transparent"
+
+
+[osd]
+enabled = true
+position = "bottom"
+duration = 2000
+monitor = "primary"
+margin = 112
+border = true
+layer = "overlay"
